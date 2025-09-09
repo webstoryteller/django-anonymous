@@ -1,0 +1,39 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body text-end">
+        <form method="post" enctype="multipart/form-data" id="write_form">
+            {% csrf_token %}
+            <input class="form-control my-2" type="text" name="title" placeholder="제목" id="title">
+            <textarea 
+            id="content" 
+            style="height: 150px;resize: none;" 
+            class="form-control my-2" 
+            name="content" 
+            placeholder="한 번 쓴 글은 지울 수 없습니다. 예의를 지켜주세요!"            
+            ></textarea>
+
+            <input class="form-control" type="file" name="img" accept="image/*">
+            <a class="text-decoration-none fs-5 my-2" id="write_btn" 
+            style="font-weight: bold;color:black;">글작성</a>
+        </form>        
+    </div>
+</div>  
+
+<script>
+    let title = document.getElementByID("title");
+    let content = document.getElementById("content");
+    let write_btn = document.getElementById("write_btn");
+    let write_form = document.getElementById("write_form");
+
+    write_btn.addEventListener("click",()=>{
+        if(title.value === "" || content.value === ""){
+            alert("내용을 채워주세요.");
+        }else{
+            write_form.submit();
+        }
+    });
+</script>
+
+{% endblock %}

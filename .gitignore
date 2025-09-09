@@ -1,0 +1,10 @@
+env.json
+# 서버 업로드에 필요한 중요 정보를 따로 모아 github에는 올리지 않도록 만든 임의의 파일
+venv/*
+# 가상 환경
+.vscode/*
+# vs 숨김 파일
+.idea/*
+# jetbrains의 Pycharm 파이참 사용시 생긴 파일들
+*.pyc 
+# python으로 생긴 cache 파일들

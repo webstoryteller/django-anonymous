@@ -1,0 +1,96 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<!-- 여기는 상세 페이지입니다! -->
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <p class="card-title"
+                style="font-weight: bold;"
+                >{{ post.title }}</p>
+                <p> 이미지 url {{ IMG_URL }} </p>
+                <p class="card-subtitle" style="font-size: 12px;">{{ post.user.nickname }} <small>{{ post.reg_date|date:"Y-m-d H:i:s"}}</small></p>
+                <p class="card-text" style="margin-top: 10px">{{ post.content }}</p>
+                
+                {% if post.img_url %}
+                <img src="{{ IMG_URL }}{{ post.img_url }}">
+                <!-- img src="https://twx-anonymous.s3.ap-southeast-2.amazonaws.com/{{ post.img_url }}" -->
+                <!-- img src="/upload/{{ post.img_url }}" -->
+                <!--post.img_url 연동시키기 위해 ANOYMOUS - urls.py에서 작업-->
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row text-end" style="margin-top: 40px;">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" id="comment_form" name="comment_form">
+                            {% csrf_token %}
+                        <textarea 
+                        placeholder="한 번 쓴 글은 지울 수 없습니다. 예의를 지켜주세요."
+                        class="form-control" 
+                        id="content"
+                        name="content"
+                        style="resize:none;height:100px"></textarea>
+                        <a 
+                        class="text-decoration-none fs-5 my-2" 
+                        id="write_btn"
+                        style="font-weight: bold;color:gray;">댓글 작성</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% for comment in post.comment_set.all %}
+        <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <p>{{ comment.reg_date|date:"Y-m-d H:i:s" }}</p>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<script>
+    let content=document.getElementById("content");
+    let write_btn=document.getElementById("write_btn");
+    let comment_form=document.getElementById("comment_form");
+
+    write_btn.addEventListener("click", ()=>{
+        
+        // if(!content.value){
+        //     alert("내용을 적어 주세요");
+        // }else{
+        //     comment_form.submit();
+        // }
+
+        //댓글 창에 내용이 있을 때만 제출(저장)이 가능하도록 함
+        if(content.value){
+            comment_form.submit();
+        }
+    })
+
+    // 댓글 창에 내용이 있어야 '댓글 작성'이 활성화할 수 있음
+    content.addEventListener("keyup",()=>{
+        if (content.value){
+            write_btn.style.color="black";
+            write_btn.style.cursor="pointer";
+        }else{
+            write_btn.style.color="gray";
+            write_btn.style.cursor="default";
+
+        }
+    })
+</script>
+
+{% endblock %}

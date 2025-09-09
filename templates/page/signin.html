@@ -1,0 +1,72 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    {% for message in messages %}   <!--user/views.py 조건문 참조-->
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+<div class="card">
+    <div class="card-body">
+  
+        <!-- <div class="row  text-center mt-3"> -->
+
+        <form method="post" id="sign_form">
+            {% csrf_token %}
+            <div class="row text-center" style="margin-top: 10px;">
+                <div class="col">
+                    <label class="form-label">아이디</label>
+                    <input class="form-control" name="username" id="username" type="text"> <!-- 아이디에 입력한 값을 username으로 받음 -->
+                </div>
+            </div>
+            
+            <!-- <div class="row  text-center mt-3"> -->
+            <div class="row text-center">
+                <div class="col">
+                    <label class="form-label">비밀번호</label>
+                    <input class="form-control" name="password" id="password" type="password">
+                </div>
+            </div>
+        </form>
+
+        <!-- <div class="row  text-end" style="margin-top: 10px;"> -->
+        <div class="row text-end" style="margin-top: 10px;">
+            <div class="col">
+                <!-- <a href="{% url 'signup' %}">회원가입</a>
+                <button class="btn btn-info">로그인</button> -->
+                <a 
+                 style="color: black; font-weight: bold"
+                 class="fs-5 text-decoration-none m-3"
+                 href ="{% url 'signup' %}">회원가입</a>
+                <a 
+                 style="color: black; font-weight: bold; cursor: pointer"
+                 class="fs-5 text-decoration-none" id="sign_btn">로그인</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let sign_btn = document.getElementById("sign_btn"); //빈 값의 로그인으로 request를 발생시키면 자원 낭비이므로 유효성 검사를 미리 하도록 함. 
+    let sign_form = document.getElementById("sign_form"); 
+    let username = document.getElementById("username");
+    let password = document.getElementById("password");
+    
+    sign_btn.addEventListener("click", ()=>{
+    
+        if(!username.value){
+            alert("아이디를 입력해주세요.");
+            return false;
+        }
+
+        if(!password.value){
+            alert("비밀번호를 입력해주세요.");
+            return false;
+        }
+
+        sign_form.submit(); //아이디와 비밀번호를 입력했으면 sign_form 곧 입력한 아이디와 비밀번호를 보내라
+    });
+
+</script>
+
+{% endblock %}
