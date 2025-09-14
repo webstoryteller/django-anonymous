@@ -1,0 +1,9 @@
+# 서버 업로드에 필요한 중요 정보를 따로 모아 AWS에는 올리지 않도록 만든 임의의 파일
+venv/*
+.vscode/*
+.idea/*
+*.pyc 
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

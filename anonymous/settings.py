@@ -85,6 +85,8 @@ WSGI_APPLICATION = 'anonymous.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+"""
+# AWS RDS DATABASE 연결시, 아래 env_json 밑에서 다시 작성하여 딕셔너리의 값을 사용할 수 있도록 함.
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
@@ -100,6 +102,7 @@ DATABASES = {
 
     }
 }
+"""
 
 
 # Password validation
@@ -178,6 +181,22 @@ with open(env_json) as f:
     # print(S3_ROOT_URL)
     # print(SECRET_KEY)
 
-# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage" # django 5.2.5 버전에서는 작동하지 않는 명령어이므로 위쪽 STORAGES 스크립트 명령어로 작성해야 함.
+
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':env_json['DATABASE_NAME'],
+        'USER':env_json['DATABASE_USER_NAME'],
+        'PASSWORD':env_json['DATABASE_PASSWORD'],
+        'HOST':env_json['DATABASE_HOST'],
+        'PORT': '5432'
+
+    }
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

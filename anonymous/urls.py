@@ -34,6 +34,8 @@ urlpatterns = [
     path("post/<int:post_id>", post_detail, name="post_detail"),
 ]
 
+""" AWS 설정시 주석 처리
 # 게시글에서 url img 불러오기 위해 아래 작성
 if settings.DEBUG: # settings의 DEBUG가 True이면 <현재는 개발 중인 페이지라서 DEBUG를 True로 해놓음. web server에 옮기면 변경함
     urlpatterns += static('upload', document_root=settings.MEDIA_ROOT) # 정적인 파일을 매칭해서 img 올린 폴더에서 url 추가함
+"""

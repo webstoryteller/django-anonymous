@@ -8,3 +8,8 @@ venv/*
 # jetbrains의 Pycharm 파이참 사용시 생긴 파일들
 *.pyc 
 # python으로 생긴 cache 파일들
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
