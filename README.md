@@ -46,7 +46,131 @@ awsebcli
    강의도 몇 년 전 내용인데 업데이트 해 주시고 호환 버전도 알려 주시고 했으면 좋았을 것을.
 
    저건 또 어떻게 하나... 난감하네요.
-   
+
+
+※ 참고 참조 검색 문제 해결 키워드. 브라우저 닫기 전에 검색 제목만 복사해서 붙임.
+1. "git" 깃 깉 얘도 보기보다 어려웠음. 지금도 잘 모르겠음. VS code에서 로그아웃 어떻게 하는지도 모름.
+Git 저장소의 경로는 현재 프로젝트 디렉토리 안의 .git 폴더에 있습니다. 이 .git 폴더는 Git의 모든 버전 관리 정보가 저장되는 곳입니다. git init으로 Git 저장소를 생성하면 현재 디렉토리에 .git 폴더가 생성되며, git clone으로 원격 저장소를 복제하면 해당 프로젝트 폴더에 .git 폴더가 생성됩니다. 
+
+git remote -v
+https://nemomemo.tistory.com/83#google_vignette
+
+Git 핵심 명령어 모음
+https://www.heropy.dev/p/PcUkdT
+
+Git 로컬 저장소의 위치를 확인하려면 해당 디렉터리에서 git status 명령어를 실행하거나, .git 폴더가 있는지 확인하면 됩니다. git status를 실행하면 Git 저장소가 초기화되어 있는 경우, Git이 현재 디렉토리를 저장소로 인식하여 관련 정보를 보여줍니다. 또는 해당 디렉터리에서 숨김 폴더인 .git 폴더를 찾아볼 수 있으며, 이 폴더의 존재가 Git 로컬 저장소의 루트임을 나타냅니다. 
+
+Github 입문기 (2) : 로컬 저장소의 새 폴더를 git에 옮기자
+https://omil.tistory.com/16#c5
+
+git repository 주소 확인
+
+Git repository 주소는 로컬 터미널에서 git remote -v 명령어를 실행하거나, git remote show origin (여기서 origin은 리모트 저장소의 별칭) 명령어로 확인할 수 있습니다. 또는 웹사이트(예: GitHub)의 저장소 페이지에서 직접 복사할 수도 있습니다. 
+Git repository가 있는 웹사이트(예: GitHub)로 이동합니다. 리포지토리의 기본 페이지에서 Clone 또는 유사한 버튼을 찾아 클릭합니다.
+
+2. AWS 버킷 정책을 삭제하려면 Amazon S3 콘솔에서 버킷의 '권한(Permissions)' 탭으로 이동한 후, '버킷 정책(Bucket Policy)' 섹션에서 '삭제(Delete)'를 선택하고, 확인 텍스트 필드에 'delete'를 입력하고 '삭제(Delete)' 버튼을 클릭하면 됩니다. 만약 정책 삭제가 안 된다면, 해당 버킷 정책에 명시적으로 s3:DeleteBucket을 거부하는 Deny 문이 있는지 확인하고, 있다면 해당 버킷 정책의 내용을 수정해야 합니다.
+
+3. django aws gunicorn 안 됨 : 근데 Gunicorn이 Nginx와 같은 거냐?
+Django와 AWS 환경에서 Gunicorn이 작동하지 않는 경우, Gunicorn 설정 및 실행 확인, Nginx 설정 확인, 서버 로그 확인, 방화벽 설정 검토가 필요합니다. 각 단계를 따라 문제를 해결해야 하며, Gunicorn이 WSGI 서버로 올바르게 설정되었는지, Nginx와 통신이 가능한지, 그리고 EC2 인스턴스의 보안 그룹과 방화벽이 트래픽을 허용하는지 확인해야 합니다.
+
+Gunicorn 실행: gunicorn --bind 0:8000 myproject.wsgi:application
+Nginx 설정 파일 확인: Nginx 설정 파일(nginx.conf, sites-available 디렉토리의 conf 파일 등)이 Gunicorn 서버의 포트(예: 8000)와 올바르게 연결되어 있는지 확인합니다.
+Nginx 설정 재시작: sudo systemctl restart nginx 
+Nginx 문법 확인: sudo nginx -t 
+
+Nginx 로그 확인: sudo tail -f /var/log/nginx/error.log
+시스템 로그 확인: sudo journalctl -u gunicorn 또는 sudo journalctl -u nginx 
+4단계: 방화벽(보안 그룹) 설정 검토
+EC2 보안 그룹: AWS EC2 인스턴스의 보안 그룹 설정에서 HTTP(80), HTTPS(443) 포트 및 Gunicorn이 사용하는 포트(예: 8000)에 대한 인바운드 트래픽이 허용되어 있는지 확인합니다. 
+이 단계를 통해 Django 앱이 정상적으로 배포되지 않는 근본적인 원인을 파악하고 문제를 해결할 수 있습니다.
+
+4. 리눅스 aws ssh python 설치
+Amazon Linux: sudo yum -y install
+python3, Ubuntu 등 Debian 계열: sudo apt-get install python3
+
+버전 확인
+python3 --version
+pip3 --version
+
+5. aws ssh 로컬 폴더 파일 업로드
+AWS에서 SSH를 사용 로컬 터미널
+
+scp -i <키_파일_경로> -r <로컬_폴더_경로> <사용자명>@<EC2_퍼블릭_IP>:<서버_폴더_경로>
+
+참조: AWS EC2 인스턴스에 파일 업로드 및 다운로드 (SCP 명령어)
+https://rizdev.tistory.com/entry/AWS-EC2-인스턴스에-파일-업로드-및-다운로드-SCP-명령어
+
+6. aws ssh requirements.txt 설치
+requirements.txt 파일이 있는 프로젝트 디렉토리로 이동
+그 다음, 가상환경을 생성 및 활성화하고 pip install -r requirements.txt 명령어를 실행
+
+설치가 되지않는 패키지는 뛰어넘고 설치 가능한 패키지만 모두 설치 시 (Linux와 CentOS에서만)
+cat requirements.txt | xargs -n 1 pip install
+
+참조: [Linux] requirements.txt 생성하기
+https://aeong-dev.tistory.com/18
+
+7. aws ssh 프로젝트 디렉토리
+AWS에서 SSH 프로젝트 디렉토리는 일반적으로 ~/.ssh 디렉토리 또는 사용자가 지정한 프로젝트 디렉토리에 위치합니다. SSH 키 페어 파일은 ~/.ssh에 저장하고, 소스 코드는 git clone 또는 다른 방법을 통해 /home/ubuntu/app 등 원하는 프로젝트 디렉토리에 복제하여 사용합니다.
+
+8. aws ssh git clone aws ec2 리눅스 github ssh key 만들기
+AWS EC2 리눅스 인스턴스에서 GitHub SSH 키를 생성하려면, 먼저 인스턴스에 SSH로 접속한 뒤 ssh-keygen -t rsa -b 4096 -C "your_email@example.com" 명령을 사용하여 SSH 키 쌍을 생성합니다
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+9. AWS EC2 cd 명령어를 사용하여 requirements.txt 파일이 위치한 프로젝트 디렉토리로 이동
+sudo find / -name requirements.txt
+
+10. AWS EC2 에 Django 기반의 웹 서버 만들기  Gunicorn 설정 NGINX 설정
+참조: https://space-cho.tistory.com/21
+
+11. 리눅스 파일 폴더 명령어
+참조: https://inpa.tistory.com/entry/LINUX-📚-디렉토리-명령어-💯-정리
+
+12. aws 리눅스 ec2 ssh pip 설치
+pip 설치 (Amazon Linux/RHEL 계열)
+sudo yum update
+sudo yum install python3-pip -y
+
+또는 ( AWS linux 2023 버전 )
+sudo dnf update
+sudo dnf install python3-pip -y
+
+13. aws ec2 파이썬 최신 버전 설치
+아마존 리눅스(Amazon Linux  AL2): sudo yum install
+아마존 리눅스(Amazon Linux  AL3): sudo dnf install
+
+sudo yum update 또는 sudo dnf update (AL2023의 경우)
+sudo yum install python3.11 -y 또는 sudo dnf install python3.11 -y
+
+-> 확인해보면 3.9 버전임. AWS ec2에서 일부러 그렇게 설정한 듯함
+
+14. aws ec2 리눅스 ssh 가상 폴더 venv 설치
+Amazon Linux 계열: sudo yum update 후 sudo yum install python3 python3-venv
+파이썬 가상환경을 생성할 프로젝트 디렉토리로 이동: python3 -m venv <가상환경이름> ( 예: python3 -m venv venv )
+가상환경 활성화 - 프로젝트 폴더로 이동.: source <가상환경이름>/bin/activate ( 예: source venv/bin/activate )
+
+15. aws ec2 리눅스 ssh 환경에서 requirements.txt 편집 env.json 만들기
+참조: 리눅스 파일 편집 cat, vi
+https://yuchae.tistory.com/443
+
+cat > requirements.txt
+django==4.2.24
+psycopg2-binary
+boto3
+django-storages
+awsebcli
+"여기서 Ctrl + D 두 번 누름"
+
+보기( ">" 를 빼고 입력함) : 
+cat requirements.txt
+
+cat > env.json
+"내용 입력함. 그리고 Ctrl + D 두 번 누름"
+보기( ">" 를 빼고 입력함) : 
+cat env.json
+
+
+
 
 
      
