@@ -34,6 +34,11 @@ https://repost.aws/questions/QUcX9TipxqSGeM5G7RORmqoQ/new-account-recently-creat
 https://www.youtube.com/watch?v=2N-L7-MAeuc
 
 
+경로 path 관련 사항
+: 윈도우 빼고 리눅스 유닉스 운영체제와 zip 파일, 파이썬, 장고는 경로 표시할 때 슬래시 (정방향 / forward slash)를 써야 함.
+: django 장고에서는 url 끝에 슬래시를 자동으로 붙이기 때문에 url을 변수로 지정하고 폴더 경로를 붙일 때 폴더 경로 '/upload/'는 에러가 나고 'upload/'로 붙여야 함. 최근 버전의 정규화 기능이라고 하는데 왜 그렇게 했는지 모르겠음. 불과 2~3년 전에 만든 코딩에 에러가 나게 만드는 심보는 뭘까?
+
+
 
 1) VS code 터미널에서 eb ssh 명령어 입력하여 AWS EC2 ssh 접속해서 직접 설치하는데 크게 다음 세가지 버전, 패키지 문제가 발생한 듯함
    - AWS ec2 리눅스 2023 운영체제 허용 버전
