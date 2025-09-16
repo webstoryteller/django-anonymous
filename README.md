@@ -1,5 +1,40 @@
 장고 django AWS EB EC2 배포 안 되는 원인 추측
 
+아. 이건 아니지. AWS 통해서 배포하는 것은 접는 것이 낫다는 결론. AWS가 정책을 바꾸면 어떻게 할 도리가 없음. 어쩐지 배포했다는 글들 보니까 대부분 2024년 이전 글들임. 몇 번 더 시도해보고 안 되면 구글이나 MS 알아보고 안 되면 PC IIS 알아봐야겠음.
+
+2024년 10월 관련 글:
+AWS계정을 새롭게 생성 후 간단한 테스트를 위해 Beanstalk 환경을 구성하는 과정에서 아래와 같은 에러가 발생했다. 에러로그는 아래와 같다. 
+위 안내 문구는 Auto Scaling 그룹에서 더 이상 Launch Configuration 생성을 지원하지 않으므로 Launch Template을 사용하라는 메시지가 포함되어 있었다.
+ERROR Creating Auto Scaling launch configuration failed Reason: Resource handler returned message: "The Launch Configuration creation operation is not available in your account. Use launch templates to create configuration templates for your Auto Scaling groups. 
+
+https://billtech.tistory.com/23
+
+1년 전 글
+Creating an Elastic Beanstalk without success
+
+Question:
+Hello, I am new to using Elastic Beanstalk. I am trying to create an environment but i get these errors
+
+Creating Auto Scaling launch configuration failed Reason: Resource handler returned message: "The Launch Configuration creation operation is not available in your account. Use launch templates to create configuration templates for your Auto Scaling groups.
+Stack named 'awseb-e-dcjhm3nklm-stack' aborted operation. Current state: 'CREATE_FAILED' Reason: The following resource(s) failed to create: [AWSEBAutoScalingLaunchConfiguration].
+Service:AmazonCloudFormation, Message:Resource AWSEBAutoScalingGroup does not exist for stack awseb-e-dcjhm3nklm-stack
+
+Answers
+I had the same issue and worked for me after trying for days was to:
+
+ - DisableIMDSv1
+ - Setting RootVolumeType to: gp3 I hope that helps
+
+https://repost.aws/questions/QUyYai-CJ4SiuDJpdV15SO2w/creating-an-elastic-beanstalk-without-success
+https://repost.aws/questions/QUcX9TipxqSGeM5G7RORmqoQ/new-account-recently-created-unable-to-create-environments-on-elastic-beanstalk-launch-configuration-error#ANY34Fe2VjTd6r8Ir2-gqJRw
+
+2025년에 배포했다는 유튜브 영상 찾았음.
+초보자를 위한 Python, Amazon Elastic Beanstalk, AWS 및 Django 앱 배포
+
+https://www.youtube.com/watch?v=2N-L7-MAeuc
+
+
+
 1) VS code 터미널에서 eb ssh 명령어 입력하여 AWS EC2 ssh 접속해서 직접 설치하는데 크게 다음 세가지 버전, 패키지 문제가 발생한 듯함
    - AWS ec2 리눅스 2023 운영체제 허용 버전
      python : Python 3.9.23 버전. sudo yum install python3.11 -y 또는 sudo dnf install python3.11 -y 등을 활용해 3.11과 3.13 버전을 설치해도 안 바뀜
