@@ -17,7 +17,9 @@ boto3
 django-storages
 awsebcli
 
-(5) 가상 파이썬 (예: venv) 켜고 코딩하여 로컬에서 잘 작동하는 것 확인하고 AWS에 upload 진행할 것
+(5) 프로젝트 틀 작성 : django-admin startproject anonymous . (장고를 이용해 anonymous라는 프로젝트를 현재 폴더에 만든다는 뜻)
+
+(6) 가상 파이썬 (예: venv) 켜고 코딩하여 로컬에서 잘 작동하는 것 확인하고 AWS에 upload 진행할 것
 
 
 <<------------------------------------------------------------------------->>
